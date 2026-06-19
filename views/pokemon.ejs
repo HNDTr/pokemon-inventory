@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
     <title>Document</title>
 </head>
 <body>
-    <% pokemons.forEach(pokemon => { %>
-        <div>
-           <img src="images/pokemon/<%= pokemon.image_path %>" alt="">
-           <h2><%= pokemon.name %></h2>
+    <div class="d-flex">
+        <% pokemons.forEach(pokemon => { %>
+        <div class="card" style="width: 18rem; ">
+           <img src="images/pokemon/<%= pokemon.image_path %>" alt="" class="card-img-top" style="height: 18rem;">
+           <div class="card-body">
+                <h2 class="card-title"><%= pokemon.name %></h2>
+           </div>
         </div>
-    <% }) %>
+        <% }) %>
+    </div>
 </body>
 </html>

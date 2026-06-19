@@ -14,8 +14,15 @@ app.set('view engine', 'ejs');
 // asset files
 const assetsPath = path.join(__dirname, 'public');
 app.use(express.static(assetsPath));
+app.use(
+  '/bootstrap',
+  express.static(
+    path.join(__dirname, 'node_modules/bootstrap/dist')
+  )
+);
 
 // SETUP
+
 app.use(express.urlencoded({extended: true}));
 
 // routes
@@ -23,6 +30,7 @@ app.use('/', indexRouter)
 app.use('/pokemon', pokemonRouter)
 // app.use('/types')
 // app.use('/trainers')
+
 
 
 
