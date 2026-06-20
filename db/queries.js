@@ -17,6 +17,10 @@ async function getAllPokemon(){
 
 
 // get all types 
+async function getAllTypes(){
+    const {rows} = await pool.query('SELECT * FROM types')
+    return rows
+}
 
 // get pokemons on types 
 
@@ -29,4 +33,5 @@ async function getAllPokemon(){
 
 module.exports = {
     getAllPokemon,
+    getAllTypes
 }

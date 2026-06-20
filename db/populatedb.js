@@ -84,8 +84,8 @@ async function main() {
         connectionString: process.env.DB_CONNECTION
     })
     await client.connect();
-    await client.query(pokemonTable);
-    // await client.query(typesTable);
+    // await client.query(pokemonTable);
+    await client.query(typesTable);
     // await client.query(trainersTable);
     await client.end();
 

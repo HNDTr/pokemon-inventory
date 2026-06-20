@@ -3,7 +3,8 @@ const app = express();
 const path = require('node:path');
 
 const indexRouter = require('./routes/index');
-const pokemonRouter = require('./routes/pokemon')
+const pokemonRouter = require('./routes/pokemon');
+const typesRouter = require('./routes/types');
 
 
 // template engine
@@ -28,7 +29,7 @@ app.use(express.urlencoded({extended: true}));
 // routes
 app.use('/', indexRouter)
 app.use('/pokemon', pokemonRouter)
-// app.use('/types')
+app.use('/types', typesRouter)
 // app.use('/trainers')
 
 
