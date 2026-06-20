@@ -22,6 +22,27 @@ const typesTable = `
         name VARCHAR(20) UNIQUE NOT NULL,
         image_path VARCHAR(255)
     );
+
+    INSERT INTO types (name, image_path) 
+    VALUES 
+        ('Normal', 'normal.png'),
+        ('Fire', 'fire.png'),
+        ('Fighting', 'fighting.png'),
+        ('Flying', 'flying.png'),
+        ('Water', 'water.png'),
+        ('Grass', 'grass.png'),
+        ('Poison', 'poison.png'),
+        ('Electric', 'electric.png'),
+        ('Ground', 'ground.png'),
+        ('Psychic', 'psychic.png'),
+        ('Rock', 'rock.png'),
+        ('Ice', 'ice.png'),
+        ('Bug', 'bug.png'),
+        ('Dragon', 'dragon.png'),
+        ('Ghost', 'ghost.png'),
+        ('Dark', 'dark.png'),
+        ('Steel', 'steel.png'),
+        ('Fairy', 'fairy.png');
 `
 
 const trainersTable = `
@@ -32,6 +53,29 @@ const trainersTable = `
     );
 `
 
+const pokemonTypesTables = `
+    CREATE TABLE IF NOT EXISTS pokemon_types (
+        pokemon_id INTEGER NOT NULL,
+        type_id INTEGER NOT NULL,
+
+        PRIMARY KEY (pokemon_id, type_id)
+
+        FOREIGN KEY (pokemon_id)
+            REFERENCES pokemon(id)
+            ON DELETE CASCADE,
+        
+        FOREIGN KEY (type_id)
+            REFERENCES types(id)
+            ON DELETE CASCADE
+    );
+
+    INSERT INTO pokemon_types (pokemon_id, type_id)
+    VALUES
+        (1, 5),
+        (1, 7),
+        (2, 2),
+        (3, 1)
+`
 
 async function main() {
     console.log('Seeding...')

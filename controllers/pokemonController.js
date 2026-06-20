@@ -5,6 +5,10 @@ async function getPokemon(req, res) {
     res.render('pokemon', {pokemons: pokemon})
 }
 
+async function addPokemon(req, res) {
+    
+}
+
 
 module.exports = {
     getPokemon
