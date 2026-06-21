@@ -11,9 +11,9 @@ const pokemonTable = `
 
     INSERT INTO pokemon (name, image_path, description)
     VALUES
-        ('Bulbasaur', 'bulbasaur.png', 'It is one of the three first partner Pokémon that can be chosen in Kanto region, along with Squirtle and Charmander.'),
-        ('Squirtle', 'squirtle.png', 'It is one of the three first partner Pokémon that can be chosen in Kanto region, along with Bulbasaur and Charmander.') ,
-        ('Charmander', 'charmander.png', 'It is one of the three first partner Pokémon that can be chosen in the Kanto region, along with Bulbasaur and Squirtle.');
+        ('Bulbasaur', 'https://res.cloudinary.com/dnib6xgxy/image/upload/v1782047940/bulbasaur_xpfwaq.png', 'It is one of the three first partner Pokémon that can be chosen in Kanto region, along with Squirtle and Charmander.'),
+        ('Squirtle', 'https://res.cloudinary.com/dnib6xgxy/image/upload/v1782048188/squirtle_msif40.png', 'It is one of the three first partner Pokémon that can be chosen in Kanto region, along with Bulbasaur and Charmander.') ,
+        ('Charmander', 'https://res.cloudinary.com/dnib6xgxy/image/upload/v1782048177/charmander_e94hlb.png', 'It is one of the three first partner Pokémon that can be chosen in the Kanto region, along with Bulbasaur and Squirtle.');
 `
 
 const typesTable = `
@@ -83,6 +83,30 @@ const pokemonTypesTables = `
         (3, 2);
 `
 
+const trainerPokemonTable = `
+    CREATE TABLE IF NOT EXISTS trainer_pokemon (
+        trainer_id INTEGER NOT NULL,
+        pokemon_id INTEGER NOT NULL,
+
+        PRIMARY KEY (trainer_id, pokemon_id),
+
+        FOREIGN KEY (trainer_id)
+            REFERENCES trainers(id)
+            ON DELETE CASCADE,
+        
+        FOREIGN KEY (pokemon_id)
+            REFERENCES pokemon(id)
+            ON DELETE CASCADE
+    );
+
+    INSERT INTO trainer_pokemon (trainer_id, pokemon_id)
+    VALUES
+        (1, 1),
+        (1, 2),
+        (1, 3),
+        (3, 2);
+`
+
 async function main() {
     console.log('Seeding...')
 
@@ -90,10 +114,11 @@ async function main() {
         connectionString: process.env.DB_CONNECTION
     })
     await client.connect();
-    // await client.query(pokemonTable);
+    await client.query(pokemonTable);
     // await client.query(typesTable);
-    // await client.query(pokemonTypesTables);
-    await client.query(trainersTable);
+    await client.query(pokemonTypesTables);
+    // await client.query(trainersTable);
+    await client.query(trainerPokemonTable);
     await client.end();
 
     console.log('Seeding process completed.')

@@ -1,0 +1,20 @@
+.types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.5rem;
+    align-items: start;
+    padding-left: 0.5rem;
+}
+.types-grid .form-check {
+    padding: 0.3rem 0.5rem;
+    padding-left: 1.5rem;
+    border-radius: 6px;
+}
+.types-grid .form-check:hover {
+    background: #f8f9fa;
+    cursor: pointer;
+}
+.card-body {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/pokemonForm.css">
+    <title>Add Pokemon</title>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="card mx-auto" style="max-width: 720px;">
+            <div class="card-body">
+                <h5 class="card-title">Add Pokémon</h5>
+                <form action="/pokemon/new" method="POST" enctype="multipart/form-data">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="image" class="form-label">Image</label>
+                            <input type="file" id="image" name="image" class="form-control">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" name="description" rows="2" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Types</label>
+                            <div class="types-grid">
+                                <% types.forEach(type => { %>
+                                    <label class="form-check d-flex align-items-center">
+                                        <input class="form-check-input" type="checkbox" name="types[]" value="<%= type.name %>">
+                                        <img src="/images/types/<%= type.image_path %>" alt="<%= type.name %>" style="width:28px; height:28px; object-fit:contain; margin-left:8px; margin-right:8px;">
+                                        <span class="form-check-label"><%= type.name %></span>
+                                    </label>
+                                <% }) %>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-end">
+                            <button type="submit" class="btn btn-primary">Add entry</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

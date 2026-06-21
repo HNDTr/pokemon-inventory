@@ -5,11 +5,17 @@ async function getPokemon(req, res) {
     res.render('pokemon', {pokemons: pokemon});
 }
 
-async function addPokemon(req, res) {
+async function addPokemonPOST(req, res) {
 
+}
+
+async function newPokemonFormGET(req, res) {
+    const types = await db.getAllTypes();
+    res.render('forms/pokemonForm', {types: types})
 }
 
 
 module.exports = {
-    getPokemon
+    getPokemon,
+    newPokemonFormGET,
 }
