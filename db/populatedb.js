@@ -5,7 +5,7 @@ const pokemonTable = `
     CREATE TABLE IF NOT EXISTS pokemon (
         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         name VARCHAR(20) UNIQUE NOT NULL,
-        image_path VARCHAR(255),
+        image_path VARCHAR(255) NOT NULL,
         description TEXT
     );
 

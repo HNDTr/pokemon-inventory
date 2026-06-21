@@ -19,6 +19,28 @@ async function getAllPokemon(){
     return rows;
 }
 
+async function insertPokemon({name, image_path, description}){
+    const sql = `
+        INSERT INTO pokemon (name, image_path, description)
+        VALUES ($1, $2, $3)
+        RETURNING id;
+    `;
+    const {rows} = await pool.query(sql, [name, image_path, description]);
+    return rows[0];
+}
+
+async function insertPokemonTypes(pokemonId, typeNames){
+    if (!Array.isArray(typeNames) || typeNames.length === 0) return;
+
+    const sql = `
+        INSERT INTO pokemon_types (pokemon_id, type_id)
+        SELECT $1, id FROM types WHERE name = ANY($2)
+        ON CONFLICT DO NOTHING;
+    `;
+
+    await pool.query(sql, [pokemonId, typeNames]);
+}
+
 // get one pokemon 
 
 // insert pokemon 
@@ -50,6 +72,8 @@ async function getAllTrainers(){
 
 module.exports = {
     getAllPokemon,
+    insertPokemon,
+    insertPokemonTypes,
     getAllTypes,
     getAllTrainers
 }
