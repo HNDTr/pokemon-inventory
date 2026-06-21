@@ -2,7 +2,20 @@ const pool = require('./pool');
 
 // get all pokemon
 async function getAllPokemon(){
-    const {rows} = await pool.query('SELECT * FROM pokemon')
+    const pokemonAndTypes = `
+        SELECT 
+            p.id,
+            p.name, 
+            p.image_path AS pokemon_image,  
+            ARRAY_AGG(t.image_path) AS types
+        FROM pokemon p
+        JOIN pokemon_types pt
+            ON p.id = pt.pokemon_id
+        JOIN types t
+            ON t.id = pt.type_id
+        GROUP BY p.id, p.name;
+    `
+    const {rows} = await pool.query(pokemonAndTypes)
     return rows
 }
 

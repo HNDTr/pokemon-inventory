@@ -58,7 +58,7 @@ const pokemonTypesTables = `
         pokemon_id INTEGER NOT NULL,
         type_id INTEGER NOT NULL,
 
-        PRIMARY KEY (pokemon_id, type_id)
+        PRIMARY KEY (pokemon_id, type_id),
 
         FOREIGN KEY (pokemon_id)
             REFERENCES pokemon(id)
@@ -71,10 +71,10 @@ const pokemonTypesTables = `
 
     INSERT INTO pokemon_types (pokemon_id, type_id)
     VALUES
-        (1, 5),
+        (1, 6),
         (1, 7),
-        (2, 2),
-        (3, 1)
+        (2, 5),
+        (3, 2);
 `
 
 async function main() {
@@ -85,7 +85,8 @@ async function main() {
     })
     await client.connect();
     // await client.query(pokemonTable);
-    await client.query(typesTable);
+    // await client.query(typesTable);
+    await client.query(pokemonTypesTables);
     // await client.query(trainersTable);
     await client.end();
 

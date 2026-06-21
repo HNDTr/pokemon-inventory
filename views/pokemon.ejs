@@ -10,9 +10,12 @@
     <div class="d-flex">
         <% pokemons.forEach(pokemon => { %>
         <div class="card" style="width: 18rem; ">
-           <img src="images/pokemon/<%= pokemon.image_path %>" alt="" class="card-img-top" style="height: 18rem;">
+           <img src="images/pokemon/<%= pokemon.pokemon_image %>" alt="" class="card-img-top" style="height: 18rem;">
            <div class="card-body">
-                <h2 class="card-title"><%= pokemon.name %></h2>
+                <h2 style="display: inline-block;"><%= pokemon.name %></h2>
+                <% pokemon.types.forEach(type => { %>
+                    <img src="images/types/<%= type %>" alt="" style="width: 50px;">
+                <% })%>
            </div>
         </div>
         <% }) %>
