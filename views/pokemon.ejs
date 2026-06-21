@@ -7,18 +7,27 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="d-flex">
-        <% pokemons.forEach(pokemon => { %>
-        <div class="card" style="width: 18rem; ">
-           <img src="images/pokemon/<%= pokemon.pokemon_image %>" alt="" class="card-img-top" style="height: 18rem;">
-           <div class="card-body">
-                <h2 style="display: inline-block;"><%= pokemon.name %></h2>
-                <% pokemon.types.forEach(type => { %>
-                    <img src="images/types/<%= type %>" alt="" style="width: 50px;">
-                <% })%>
-           </div>
+  
+    <div class="container py-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 g-3 types-container">
+            <% pokemons.forEach(pokemon => { %>
+            <div class="col">
+                <div class="card h-100 small-type-card">
+                    <div class="card-img-container d-flex justify-content-center align-items-center" style="min-height: 200px; background-color: #f8f9fa;">
+                        <img src="images/pokemon/<%= pokemon.pokemon_image %>" alt="<%= pokemon.name %>" class="img-fluid" style="max-height: 180px; max-width: 100%; object-fit: contain;">
+                    </div>
+                    <div class="card-body text-center">
+                        <h6 class="card-title mb-2"><%= pokemon.name %></h6>
+                        <div class="d-flex justify-content-center gap-2 flex-wrap">
+                            <% pokemon.types.forEach(type => { %>
+                                <img src="images/types/<%= type %>" alt="" style="width: 24px; height: 24px; object-fit: contain;">
+                            <% })%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
         </div>
-        <% }) %>
     </div>
 </body>
 </html>
