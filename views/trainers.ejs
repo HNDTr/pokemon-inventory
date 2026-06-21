@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
+    <!-- <link rel="stylesheet" href="../public/css/types.css"> -->
+    <title>Document</title>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 g-3 types-container">
+            <% trainers.forEach(trainer => { %>
+            <div class="col">
+                <div class="card h-100 small-type-card">
+                    <img src="images/trainers/<%= trainer.image_path %>" alt="<%= trainer.name %>" class="card-img-top img-fluid" style="max-height: 250px; object-fit: contain; padding: .75rem;">
+                    <div class="card-body text-center py-2">
+                        <h6 class="card-title mb-0"><%= trainer.name %></h6>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>

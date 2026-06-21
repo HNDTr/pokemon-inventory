@@ -5,6 +5,7 @@ const path = require('node:path');
 const indexRouter = require('./routes/index');
 const pokemonRouter = require('./routes/pokemon');
 const typesRouter = require('./routes/types');
+const trainersRouter = require('./routes/trainers');
 
 
 // template engine
@@ -30,7 +31,7 @@ app.use(express.urlencoded({extended: true}));
 app.use('/', indexRouter)
 app.use('/pokemon', pokemonRouter)
 app.use('/types', typesRouter)
-// app.use('/trainers')
+app.use('/trainers', trainersRouter)
 
 
 
@@ -38,7 +39,7 @@ app.use('/types', typesRouter)
 const PORT = 3000;
 app.listen(PORT, (err) => {
     if (err) {
-        throw error
+        throw err
     }
     console.log(`Pokemon inventory server started - listening on port ${3000}`);
 })

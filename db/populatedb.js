@@ -51,6 +51,12 @@ const trainersTable = `
         name VARCHAR(20) UNIQUE NOT NULL,
         image_path VARCHAR(255)
     );
+
+    INSERT INTO trainers (name, image_path) 
+    VALUES
+        ('Ash Ketchum', 'Ash_Ketchum.png'),
+        ('Cynthia', 'Cynthia.png'),
+        ('Gary Oak', 'Gary_Oak.png');
 `
 
 const pokemonTypesTables = `
@@ -86,8 +92,8 @@ async function main() {
     await client.connect();
     // await client.query(pokemonTable);
     // await client.query(typesTable);
-    await client.query(pokemonTypesTables);
-    // await client.query(trainersTable);
+    // await client.query(pokemonTypesTables);
+    await client.query(trainersTable);
     await client.end();
 
     console.log('Seeding process completed.')
