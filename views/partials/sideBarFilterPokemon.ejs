@@ -1,0 +1,39 @@
+<div class="card shadow-sm border-0">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Filter Pokémon</h5>
+    <form action="/pokemon" method="get">
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Sort by name</label>
+        <div class="btn-group w-100" role="group" aria-label="Sort order">
+          <input type="radio" class="btn-check" name="sort" id="sortAsc" value="asc" autocomplete="off" <%= sortOrder === 'asc' ? 'checked' : '' %>>
+          <label class="btn btn-outline-primary" for="sortAsc">A → Z</label>
+          <input type="radio" class="btn-check" name="sort" id="sortDesc" value="desc" autocomplete="off" <%= sortOrder === 'desc' ? 'checked' : '' %>>
+          <label class="btn btn-outline-primary" for="sortDesc">Z → A</label>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <h6 class="mb-0">Types</h6>
+            <small class="text-muted">Show any selected type</small>
+          </div>
+          <a href="/pokemon" class="small text-decoration-none">Clear</a>
+        </div>
+        <div class="row g-2">
+          <% allTypes.forEach(type => { %>
+            <div class="col-6">
+              <label class="form-check card p-2 h-100 mb-0 d-flex align-items-center gap-2 flex-nowrap" style="white-space: nowrap; line-height: 1;">
+                <input class="form-check-input" type="checkbox" name="types" value="<%= type.name %>" <%= selectedTypes.includes(type.name) ? 'checked' : '' %> style="width: 18px; height: 18px; align-self: center; margin: 0;">
+                <img src="/images/types/<%= type.image_path %>" alt="<%= type.name %>" style="width: 20px; height: 20px; object-fit: contain; align-self: center;">
+                <span class="form-check-label mb-0 text-nowrap fs-7" style="line-height: 1; align-self: center;"><%= type.name %></span>
+              </label>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Apply filters</button>
+    </form>
+  </div>
+</div>

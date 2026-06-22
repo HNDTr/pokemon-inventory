@@ -1,8 +1,8 @@
 const pool = require('./pool');
 
 // get all pokemon
-async function getAllPokemon(){
-    const pokemonAndTypes = `
+async function getAllPokemon({ sort = 'asc', types = [] } = {}){
+    let query = `
         SELECT 
             p.id,
             p.name, 
@@ -13,9 +13,28 @@ async function getAllPokemon(){
             ON p.id = pt.pokemon_id
         JOIN types t
             ON t.id = pt.type_id
-        GROUP BY p.id, p.name;
     `;
-    const {rows} = await pool.query(pokemonAndTypes);
+    const params = [];
+
+    if (Array.isArray(types) && types.length > 0) {
+        params.push(types);
+        query += `
+        WHERE p.id IN (
+            SELECT pt2.pokemon_id
+            FROM pokemon_types pt2
+            JOIN types t2 ON t2.id = pt2.type_id
+            WHERE t2.name = ANY($${params.length})
+        )
+        `;
+    }
+
+    const order = sort === 'desc' ? 'DESC' : 'ASC';
+    query += `
+        GROUP BY p.id, p.name, p.image_path
+        ORDER BY p.name ${order};
+    `;
+
+    const {rows} = await pool.query(query, params);
     return rows;
 }
 
