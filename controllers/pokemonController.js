@@ -21,7 +21,7 @@ const {body, validationResult, matchedData} = require('express-validator');
 
 async function getPokemon(req, res) {
     const pokemon = await db.getAllPokemon();
-    res.render('pokemon', {pokemons: pokemon, title: 'Pokemon'});
+    res.render('pokemon', {pokemons: pokemon, title: 'Pokemon', buttonTitle: 'pokemon'});
 }
 
 

@@ -2,6 +2,8 @@
   <div class="container-fluid px-4">
     <div class="d-flex align-items-center">
       <span class="fs-1 fw-bold mb-0"><%= title %></span>
-      <a class="btn btn-outline-success ms-3"  href="<%= title %>/new">Add new <%= title %></a>
+      <% if (buttonTitle) { %>
+        <a class="btn btn-outline-success ms-3" href="/<%= title %>/new">Add <%= buttonTitle %></a>
+      <% } %>
     </div>
 </nav>
