@@ -1,5 +1,22 @@
 <div class="card shadow-sm border-0">
   <div class="card-body">
+    <style>
+      .type-filter-option {
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+      }
+      .type-filter-option:hover {
+        background-color: #e6f4ea;
+        transform: translateX(2px);
+      }
+      .type-filter-input {
+        width: 18px;
+        height: 18px;
+      }
+      .type-filter-label {
+        line-height: 1;
+      }
+    </style>
     <h5 class="card-title mb-3">Filter Pokémon</h5>
     <form action="/pokemon" method="get">
       <div class="mb-4">
@@ -23,10 +40,10 @@
         <div class="row g-2">
           <% allTypes.forEach(type => { %>
             <div class="col-6">
-              <label class="form-check card p-2 h-100 mb-0 d-flex align-items-center gap-2 flex-nowrap" style="white-space: nowrap; line-height: 1;">
-                <input class="form-check-input" type="checkbox" name="types" value="<%= type.name %>" <%= selectedTypes.includes(type.name) ? 'checked' : '' %> style="width: 18px; height: 18px; align-self: center; margin: 0;">
-                <img src="/images/types/<%= type.image_path %>" alt="<%= type.name %>" style="width: 20px; height: 20px; object-fit: contain; align-self: center;">
-                <span class="form-check-label mb-0 text-nowrap fs-7" style="line-height: 1; align-self: center;"><%= type.name %></span>
+              <label class="card p-2 h-100 mb-0 type-filter-option d-flex align-items-center gap-2 flex-nowrap" style="white-space: nowrap; line-height: 1;">
+                <input type="checkbox" name="types" value="<%= type.name %>" <%= selectedTypes.includes(type.name) ? 'checked' : '' %> class="type-filter-input" style="position: static; margin: 0;">
+                <img src="/images/types/<%= type.image_path %>" alt="<%= type.name %>" style="width: 20px; height: 20px; object-fit: contain;">
+                <span class="mb-0 text-nowrap fs-7 type-filter-label" style="line-height: 1;"><%= type.name %></span>
               </label>
             </div>
           <% }) %>
