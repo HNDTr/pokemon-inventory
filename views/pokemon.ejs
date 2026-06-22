@@ -8,7 +8,9 @@
 </head>
 <body>
     <%- include('partials/navBar') %>
-    <div class="container py-4">
+    <div class="container-fluid px-4">
+        <%- include('partials/pageTitle'), {title: title} %>
+        <div class="container py-4 px-0">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 g-3 types-container">
             <% pokemons.forEach(pokemon => { %>
             <div class="col">
@@ -29,5 +31,7 @@
             <% }) %>
         </div>
     </div>
+    </div>
+    
 </body>
 </html>

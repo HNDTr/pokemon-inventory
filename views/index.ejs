@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Poke Inventory</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/homePage.css">
 </head>
 <body>
-    <h1>Pokemon Inventory</h1>
+    <%- include('partials/navBar') %>
+    <main class="hero-container">
+        <h1 class="hero-title">Welcome to Poke Inventory</h1>
+        <p class="hero-subtitle">Browse your collection, add new Pokémon, and manage types and trainers with a clean, responsive interface.</p>
+        <img src="/images/Home.png" alt="Pokémon dashboard" class="hero-image img-fluid shadow-sm rounded">
+        <a href="/pokemon" class="btn btn-primary btn-lg hero-btn">Get started</a>
+    </main>
 </body>
 </html>
