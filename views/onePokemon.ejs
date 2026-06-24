@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <title><%= pokemon.name %> • Pokémon detail</title>
+    <style>
+        .pokemon-detail-card {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e7e7e7;
+            box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.05);
+        }
+        .pokemon-image-card {
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #f4f8ff 0%, #ffffff 100%);
+            position: relative;
+        }
+        .pokemon-image-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .pokemon-name-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.85rem 1rem;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 999px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+        }
+        .detail-box {
+            background: #ffffff;
+            border: 1px solid #f0f0f5;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+        .detail-box h5 {
+            margin-bottom: 0.85rem;
+            font-weight: 700;
+        }
+        .type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: #f4f8ff;
+            border: 1px solid #d5e1ff;
+            color: #1f3d9f;
+            border-radius: 999px;
+            padding: 0.45rem 0.8rem;
+            margin: 0.25rem 0.25rem 0 0;
+            font-size: 0.92rem;
+        }
+        .type-badge img {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+        }
+        .trainer-card {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid #f1f2f6;
+        }
+        .trainer-card:last-child {
+            border-bottom: none;
+        }
+        .trainer-card img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 0.9rem;
+            border: 1px solid #e3e8f2;
+        }
+        .btn-back {
+            min-width: 110px;
+            margin-bottom: 25px;
+        }
+        .trainers-list {
+            max-height: 180px; /* roughly 2 trainer cards */
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/navBar') %>
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="/pokemon" class="btn btn-outline-secondary btn-back" onclick="history.back(); return false;">← Back</a>
+            <span class="text-muted">Pokémon detail</span>
+        </div>
+
+        <div class="row g-4 pokemon-detail-card p-0">
+            <div class="col-12 col-lg-5 pokemon-image-card">
+                <div class="pokemon-name-badge">#<%= pokemon.id %> <%= pokemon.name %></div>
+                <img src="<%= pokemon.pokemon_image %>" alt="<%= pokemon.name %>">
+            </div>
+
+            <div class="col-12 col-lg-7 p-4">
+                <div class="detail-box">
+                    <h5>Description</h5>
+                    <p class="mb-0 text-muted"><%= pokemon.description || 'No description available for this Pokémon.' %></p>
+                </div>
+
+                <div class="detail-box">
+                    <h5>Types</h5>
+                    <div class="d-flex flex-wrap align-items-center">
+                        <% pokemon.types.forEach(type => { %>
+                            <span class="type-badge">
+                                <img src="/images/types/<%= type %>" alt="<%= type %>">
+                                <%= type.slice(0, -4) %>
+                            </span>
+                        <% }) %>
+                    </div>
+                </div>
+
+                <div class="detail-box" >
+                    <h5>Trainers</h5>
+                    <div class="trainers-list">
+                        <% if (trainers && trainers.length > 0) { %>
+                        <% trainers.forEach(trainer => { %>
+                            <div class="trainer-card">
+                                <img src="/images/trainers/<%= trainer.image_path %>" alt="<%= trainer.name %>">
+                                <div>
+                                    <h6 class="mb-1"><%= trainer.name %></h6>
+                                    <p class="mb-0 text-muted">Trainer for <%= pokemon.name %></p>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                        <p class="mb-0 text-muted">No associated trainers found for this Pokémon.</p>
+                    <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

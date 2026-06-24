@@ -35,6 +35,21 @@ async function getPokemon(req, res) {
     });
 }
 
+async function getOnePokemon(req, res) {
+    const pokemonId = req.params.id;
+    const pokemons = await db.getAllPokemon();
+    const targetPokemon = pokemons.find(pokemon => String(pokemon.id) === pokemonId);
+    if (!targetPokemon) {
+        return res.status(404).send('Pokémon not found');
+    }
+    const result = await db.getTrainersToPokemon(pokemonId) || { trainers: [] };
+
+    res.render('onePokemon', {
+        pokemon: targetPokemon,
+        trainers: Array.isArray(result.trainers) ? result.trainers : [],
+    });
+}
+
 
 // const addPokemonPOST = [
 //     ...validateFormInputs,
@@ -100,4 +115,5 @@ module.exports = {
     getPokemon,
     addPokemonPOST,
     newPokemonFormGET,
+    getOnePokemon,
 }

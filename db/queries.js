@@ -6,6 +6,7 @@ async function getAllPokemon({ sort = 'asc', types = [] } = {}){
         SELECT 
             p.id,
             p.name, 
+            p.description,
             p.image_path AS pokemon_image,  
             ARRAY_AGG(t.image_path) AS types
         FROM pokemon p
@@ -86,7 +87,30 @@ async function getAllTrainers(){
     return rows;
 }
 
-// get pokemons on trainers
+// get trainers on pokemon
+async function getTrainersToPokemon(pokemon_id) {
+    const SQL = `
+        SELECT
+            p.id,
+            json_agg(
+                json_build_object(
+                    'id', tr.id,
+                    'name', tr.name,
+                    'image_path', tr.image_path
+                )
+            ) AS trainers
+        FROM pokemon p
+        JOIN trainer_pokemon tp
+            ON p.id = tp.pokemon_id
+        JOIN trainers tr
+            ON tp.trainer_id = tr.id
+        WHERE p.id = $1
+        GROUP BY p.id
+    `;
+
+    const { rows } = await pool.query(SQL, [pokemon_id]);
+    return rows[0] || { trainers: [] };
+}
 
 
 module.exports = {
@@ -94,5 +118,6 @@ module.exports = {
     insertPokemon,
     insertPokemonTypes,
     getAllTypes,
-    getAllTrainers
+    getAllTrainers,
+    getTrainersToPokemon
 }

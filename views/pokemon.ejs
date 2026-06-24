@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/types.css"/>
     <title>Document</title>
 </head>
 <body>
@@ -19,7 +20,9 @@
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3 types-container">
             <% pokemons.forEach(pokemon => { %>
                 <div class="col">
+                    <a href="/pokemon/<%= pokemon.id %>">
                     <div class="card h-100 small-type-card shadow-sm">
+                        <div class="pokemon-tag"><span class="badge bg-success">View details</span></div>
                         <div class="card-img-container d-flex justify-content-center align-items-center" style="min-height: 200px; background-color: #f8f9fa;">
                             <img src="<%= pokemon.pokemon_image %>" alt="<%= pokemon.name %>" class="img-fluid" style="max-height: 180px; max-width: 100%; object-fit: contain;">
                         </div>
@@ -32,6 +35,7 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
             <% }) %>
                     </div>

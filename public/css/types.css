@@ -1,0 +1,57 @@
+.types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.5rem;
+    align-items: start;
+    padding-left: 0.5rem;
+}
+.types-grid .form-check {
+    padding: 0.3rem 0.5rem;
+    padding-left: 1.5rem;
+    border-radius: 6px;
+}
+.types-grid .form-check:hover {
+    background: #f8f9fa;
+    cursor: pointer;
+}
+.types-container a {
+    text-decoration: none;
+}
+.types-container a:hover {
+    text-decoration: none;
+}
+.card-body {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.small-type-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease;
+}
+.small-type-card:hover {
+    transform: scale(1.03);
+    background-color: #d4edda;
+    box-shadow: 0 1rem 1.75rem rgba(0, 0, 0, 0.16);
+}
+.pokemon-tag {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    z-index: 2;
+}
+.small-type-card:hover .pokemon-tag {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.pokemon-tag .badge {
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+}
