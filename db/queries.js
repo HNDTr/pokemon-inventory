@@ -62,14 +62,7 @@ async function insertPokemonTypes(pokemonId, typeNames){
     await pool.query(sql, [pokemonId, typeNames]);
 }
 
-// get one pokemon 
-
-// insert pokemon 
-
 // search pokemon
-
-
-
 
 
 // get all types 
@@ -78,13 +71,14 @@ async function getAllTypes(){
     return rows;
 }
 
-// get pokemons on types 
-
-
-
 // get all trainers
-async function getAllTrainers(){
-    const {rows} = await pool.query('SELECT * FROM trainers');
+async function getAllTrainers({sort='asc'} = {}){
+    let sql = 'SELECT * FROM trainers';
+    const order = sort === 'desc' ? 'DESC' : 'ASC';
+    sql += `
+        ORDER BY name ${order};
+    `;
+    const {rows} = await pool.query(sql);
     return rows;
 }
 

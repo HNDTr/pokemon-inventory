@@ -10,20 +10,47 @@
 <body>
     <%- include('partials/navBar') %>
     <div class="container-fluid px-4">
-        <%- include('partials/pageTitle', {title: title, buttonTitle: buttonTitle}) %>
-        <div class="container py-4 px-0">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 g-3 types-container">
-            <% trainers.forEach(trainer => { %>
-            <div class="col">
-                <div class="card h-100 small-type-card">
-                    <img src="<%= trainer.image_path %>" alt="<%= trainer.name %>" class="card-img-top img-fluid" style="max-height: 250px; object-fit: contain; padding: .75rem;">
-                    <div class="card-body text-center py-2">
-                        <h6 class="card-title mb-0"><%= trainer.name %></h6>
-                    </div>
+    <%- include('partials/pageTitle', {title: title, buttonTitle: buttonTitle}) %>
+
+    <div class="container py-4 px-0">
+        <div class="row gy-4">
+
+            <div class="col-12 col-lg-4 col-xl-3">
+                <%- include('partials/sideBarFilterTrainer', {
+                    sortOrder: sortOrder,
+                }) %>
+            </div>
+
+            <div class="col-12 col-lg-8 col-xl-9">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3">
+
+                    <% trainers.forEach(trainer => { %>
+                        <div class="col">
+                            <div class="card h-100 small-type-card shadow-sm">
+                                <div class="card-img-container d-flex justify-content-center align-items-center"
+                                     style="min-height: 200px; background-color: #f8f9fa;">
+                                    <img
+                                        src="<%= trainer.image_path %>"
+                                        alt="<%= trainer.name %>"
+                                        class="img-fluid"
+                                        style="max-height: 180px; max-width: 100%; object-fit: contain;"
+                                    >
+                                </div>
+
+                                <div class="card-body text-center">
+                                    <h6 class="card-title mb-2">
+                                        <%= trainer.name %>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+
                 </div>
             </div>
-            <% }) %>
+
         </div>
     </div>
+</div>
 </body>
 </html>

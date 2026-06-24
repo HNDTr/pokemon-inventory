@@ -3,8 +3,14 @@ const { uploadImage } = require('../db/cloudinary/queries');
 
 
 async function getTrainers(req, res){
-    const trainers = await db.getAllTrainers();
-    res.render('trainers', {trainers: trainers, title: 'Trainers', buttonTitle: 'trainer'});
+    const sortOrder = req.query.sort === 'desc' ? 'desc' : 'asc';
+    const trainers = await db.getAllTrainers({sort: sortOrder});
+    res.render('trainers',{
+    trainers: trainers, 
+    title: 'Trainers', 
+    buttonTitle: 'trainer',
+    sortOrder: sortOrder
+});
 }
 
 async function addTrainerPOST(req, res) {

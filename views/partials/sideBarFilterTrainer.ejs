@@ -1,0 +1,34 @@
+<div class="card shadow-sm border-0">
+  <div class="card-body">
+    <style>
+      .type-filter-option {
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+      }
+      .type-filter-option:hover {
+        background-color: #e6f4ea;
+        transform: translateX(2px);
+      }
+      .type-filter-input {
+        width: 18px;
+        height: 18px;
+      }
+      .type-filter-label {
+        line-height: 1;
+      }
+    </style>
+    <h5 class="card-title mb-3">Filter Trainers</h5>
+    <form action="/trainers" method="get">
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Sort by name</label>
+        <div class="btn-group w-100" role="group" aria-label="Sort order">
+          <input type="radio" class="btn-check" name="sort" id="sortAsc" value="asc" autocomplete="off" <%= sortOrder === 'asc' ? 'checked' : '' %>>
+          <label class="btn btn-outline-primary" for="sortAsc">A → Z</label>
+          <input type="radio" class="btn-check" name="sort" id="sortDesc" value="desc" autocomplete="off" <%= sortOrder === 'desc' ? 'checked' : '' %>>
+          <label class="btn btn-outline-primary" for="sortDesc">Z → A</label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Apply filters</button>
+    </form>
+  </div>
+</div>
