@@ -1,9 +1,9 @@
 const cloudinary = require('./pool');
 const fs = require('fs/promises');
 
-async function uploadImage(filePath) {
+async function uploadImage(filePath, folderName) {
     const result = await cloudinary.uploader.upload(filePath, {
-        folder: 'pokemon',
+        folder: folderName,
         use_filename: true,
         unique_filename: true,
     });

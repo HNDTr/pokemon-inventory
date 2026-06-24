@@ -49,6 +49,7 @@ async function insertPokemon({name, image_path, description}){
     return rows[0];
 }
 
+
 async function insertPokemonTypes(pokemonId, typeNames){
     if (!Array.isArray(typeNames) || typeNames.length === 0) return;
 
@@ -87,6 +88,28 @@ async function getAllTrainers(){
     return rows;
 }
 
+async function insertTrainer({name, image_path, description}){
+    const sql = `
+        INSERT INTO trainers (name, image_path, description)
+        VALUES ($1, $2, $3)
+        RETURNING id;
+    `;
+    const {rows} = await pool.query(sql, [name, image_path, description]);
+    return rows[0];
+}
+
+async function insertTrainerPokemon(trainerId, pokemonNames) {
+    if (!Array.isArray(pokemonNames) || pokemonNames.length === 0) return;
+
+    const sql = `
+        INSERT INTO trainer_pokemon (trainer_id, pokemon_id)
+        SELECT $1, id FROM pokemon WHERE name = ANY($2)
+        ON CONFLICT DO NOTHING;
+    `;
+
+    await pool.query(sql, [trainerId, pokemonNames]);
+}
+
 // get trainers on pokemon
 async function getTrainersToPokemon(pokemon_id) {
     const SQL = `
@@ -119,5 +142,7 @@ module.exports = {
     insertPokemonTypes,
     getAllTypes,
     getAllTrainers,
-    getTrainersToPokemon
+    getTrainersToPokemon,
+    insertTrainer,
+    insertTrainerPokemon
 }

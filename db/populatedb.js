@@ -49,14 +49,15 @@ const trainersTable = `
     CREATE TABLE IF NOT EXISTS trainers (
         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         name VARCHAR(20) UNIQUE NOT NULL,
-        image_path VARCHAR(255)
+        image_path VARCHAR(255) NOT NULL,
+        description TEXT
     );
 
-    INSERT INTO trainers (name, image_path) 
+    INSERT INTO trainers (name, image_path, description) 
     VALUES
-        ('Ash Ketchum', 'Ash_Ketchum.png'),
-        ('Cynthia', 'Cynthia.png'),
-        ('Gary Oak', 'Gary_Oak.png');
+        ('Ash Ketchum', 'https://res.cloudinary.com/dnib6xgxy/image/upload/v1782328474/Ash_Ketchum_fjhzhd.webp', 'The main protagonist of Pokémon the Series, and the first overall protagonist of the greater Pokémon animated series. He is also the main character of various manga based on the animated series, including The Electric Tale of Pikachu and Ash & Pikachu, and one of the protagonists of Pocket Monsters Diamond & Pearl and Pokémon Journeys.'),
+        ('Cynthia', 'https://res.cloudinary.com/dnib6xgxy/image/upload/v1782328471/Cynthia_h7xivs.png', 'An archeologist who is also the Champion of the Sinnoh region''s Pokémon League in Pokémon Diamond, Pearl, Platinum, Brilliant Diamond, and Shining Pearl.'),
+        ('Gary Oak', 'https://res.cloudinary.com/dnib6xgxy/image/upload/v1782328486/Gary_Oak_twonfn.webp', 'A major recurring character in Pokémon the Series. He is a Pokémon Researcher from Pallet Town and grandson of Professor Oak. He is a childhood friend of Ash Ketchum and his main rival in the original series.');
 `
 
 const pokemonTypesTables = `
@@ -114,10 +115,10 @@ async function main() {
         connectionString: process.env.DB_CONNECTION
     })
     await client.connect();
-    await client.query(pokemonTable);
+    // await client.query(pokemonTable);
     // await client.query(typesTable);
-    await client.query(pokemonTypesTables);
-    // await client.query(trainersTable);
+    // await client.query(pokemonTypesTables);
+    await client.query(trainersTable);
     await client.query(trainerPokemonTable);
     await client.end();
 

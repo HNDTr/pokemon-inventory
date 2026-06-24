@@ -130,7 +130,7 @@
                         <% if (trainers && trainers.length > 0) { %>
                         <% trainers.forEach(trainer => { %>
                             <div class="trainer-card">
-                                <img src="/images/trainers/<%= trainer.image_path %>" alt="<%= trainer.name %>">
+                                <img src="<%= trainer.image_path %>" alt="<%= trainer.name %>">
                                 <div>
                                     <h6 class="mb-1"><%= trainer.name %></h6>
                                     <p class="mb-0 text-muted">Trainer for <%= pokemon.name %></p>
