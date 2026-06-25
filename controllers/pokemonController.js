@@ -36,24 +36,24 @@ async function getOnePokemon(req, res) {
 
 async function addPokemonPOST(req, res) {
     const { name, description} = req.body;
-        const types = Array.isArray(req.body.types) ? req.body.types : req.body.types ? [req.body.types] : [];
-        let imageUrl = null;
+    const types = Array.isArray(req.body.types) ? req.body.types : req.body.types ? [req.body.types] : [];
+    let imageUrl = null;
 
-        if (req.file) {
-            imageUrl = await uploadImage(req.file.path, 'pokemon');
-        }
+    if (req.file) {
+        imageUrl = await uploadImage(req.file.path, 'pokemon');
+    }
 
-        const pokemon = await db.insertPokemon({
-            name,
-            image_path: imageUrl,
-            description,
-        });
+    const pokemon = await db.insertPokemon({
+        name,
+        image_path: imageUrl,
+        description,
+    });
 
-        if (types.length > 0) {
-            await db.insertPokemonTypes(pokemon.id, types);
-        }
+    if (types.length > 0) {
+        await db.insertPokemonTypes(pokemon.id, types);
+    }
 
-        res.redirect('/pokemon');
+    res.redirect('/pokemon');
 }
 
 
@@ -62,10 +62,15 @@ async function newPokemonFormGET(req, res) {
     res.render('forms/pokemonForm', {types: types})
 }
 
+async function editPokemon(pokemonInfo) {
+    
+}   
+
 
 module.exports = {
     getPokemon,
     addPokemonPOST,
     newPokemonFormGET,
     getOnePokemon,
+    editPokemon
 }
