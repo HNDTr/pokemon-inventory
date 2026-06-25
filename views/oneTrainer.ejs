@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <title><%= pokemon.name %> • Pokémon detail</title>
+    <style>
+        .trainers-detail-card {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e7e7e7;
+            box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.05);
+        }
+        .trainers-image-card {
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #f4f8ff 0%, #ffffff 100%);
+            position: relative;
+        }
+        .trainers-image-card img {
+            width: 320px;
+            height: 320px;
+            object-fit: contain;
+        }
+        .trainers-name-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.85rem 1rem;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 999px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+        }
+        .detail-box {
+            background: #ffffff;
+            border: 1px solid #f0f0f5;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+        .detail-box h5 {
+            margin-bottom: 0.85rem;
+            font-weight: 700;
+        }
+      
+        .btn-back {
+            min-width: 110px;
+            margin-bottom: 25px;
+        }
+
+        .pokemon-list {
+            max-height: 220px;
+            overflow-y: auto;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 12px;
+        }
+
+        .pokemon-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 90px;
+            border: 1px solid #e3e8f2;
+            border-radius: 12px;
+            background: #f8f9fa;
+        }
+
+        .pokemon-card img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/navBar') %>
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="/trainers" class="btn btn-outline-secondary btn-back" onclick="history.back(); return false;">← Back</a>
+            <span class="text-muted">Trainer detail</span>
+        </div>
+
+        <div class="row g-4 trainers-detail-card p-0">
+            <div class="col-12 col-lg-5 trainers-image-card">
+                <div class="trainers-name-badge">#<%= trainer.id %> <%= trainer.name %></div>
+                <img src="<%= trainer.image_path %>" alt="<%= trainer.name %>">
+            </div>
+
+            <div class="col-12 col-lg-7 p-4">
+                <div class="detail-box">
+                    <h5>Description</h5>
+                    <p class="mb-0 text-muted"><%= trainer.description || 'No description available for this trainer.' %></p>
+                </div>
+
+                <div class="detail-box" >
+                    <h5>Pokemon</h5>
+                    <div class="pokemon-list">
+                        <% if (pokemon && pokemon.length > 0) { %>
+                        <% pokemon.forEach(poke => { %>
+                            <div class="pokemon-card">
+                                <img src="<%= poke.image_path %>" alt="<%= poke.name %>">
+                            </div>
+                        <% }) %>
+                    <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

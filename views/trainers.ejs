@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
-    <!-- <link rel="stylesheet" href="../public/css/types.css"> -->
+    <link rel="stylesheet" href="/css/types.css"/>
     <title>Document</title>
 </head>
 <body>
@@ -26,6 +26,7 @@
 
                     <% trainers.forEach(trainer => { %>
                         <div class="col">
+                            <a href="/trainers/<%= trainer.id %>" class="text-decoration-none">
                             <div class="card h-100 small-type-card shadow-sm">
                                 <div class="card-img-container d-flex justify-content-center align-items-center"
                                      style="min-height: 200px; background-color: #f8f9fa;">
@@ -43,6 +44,7 @@
                                     </h6>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     <% }) %>
 

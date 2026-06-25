@@ -41,8 +41,24 @@ async function newTrainerFormGET(req, res) {
     res.render('forms/trainerForm', {pokemons: pokemon})
 }
 
+async function getOneTrainer(req, res) {
+    const trainer_id = req.params.id;
+    const trainers = await db.getAllTrainers();
+    const targetTrainer = trainers.find(trainer => String(trainer.id) === trainer_id);
+    if (!targetTrainer) {
+        return res.status(404).send('Trainer not found');
+    }
+    const result = await db.getPokemonToTrainer(trainer_id) || { pokemon: [] };
+
+    res.render('oneTrainer', {
+        trainer: targetTrainer,
+        pokemon: Array.isArray(result.pokemon) ? result.pokemon : [],
+    });
+}
+
 module.exports = {
     getTrainers,
     newTrainerFormGET,
-    addTrainerPOST
+    addTrainerPOST,
+    getOneTrainer
 }

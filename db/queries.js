@@ -129,6 +129,32 @@ async function getTrainersToPokemon(pokemon_id) {
     return rows[0] || { trainers: [] };
 }
 
+// get pokemon on trainer
+async function getPokemonToTrainer(trainer_id) {
+    const SQL = `
+        SELECT
+            tr.id,
+            json_agg(
+                json_build_object(
+                    'id', p.id,
+                    'name', p.name,
+                    'image_path', p.image_path
+                )
+            ) AS pokemon
+        FROM trainers tr
+        JOIN trainer_pokemon tp
+            ON tr.id = tp.trainer_id
+        JOIN pokemon p
+            ON tp.pokemon_id = p.id
+        WHERE tr.id = $1
+        GROUP BY tr.id
+    `;
+
+    const { rows } = await pool.query(SQL, [trainer_id]);
+    return rows[0] || { pokemon: [] };
+}
+
+
 
 module.exports = {
     getAllPokemon,
@@ -138,5 +164,6 @@ module.exports = {
     getAllTrainers,
     getTrainersToPokemon,
     insertTrainer,
-    insertTrainerPokemon
+    insertTrainerPokemon,
+    getPokemonToTrainer
 }
