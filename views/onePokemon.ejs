@@ -132,6 +132,7 @@
                     <div class="trainers-list">
                         <% if (trainers && trainers.length > 0) { %>
                         <% trainers.forEach(trainer => { %>
+                            <a href="/trainers/<%= trainer.id %>" class="text-decoration-none">
                             <div class="trainer-card">
                                 <img src="<%= trainer.image_path %>" alt="<%= trainer.name %>">
                                 <div>
@@ -139,6 +140,7 @@
                                     <p class="mb-0 text-muted">Trainer for <%= pokemon.name %></p>
                                 </div>
                             </div>
+                            </a>
                         <% }) %>
                     <% } else { %>
                         <p class="mb-0 text-muted">No associated trainers found for this Pokémon.</p>

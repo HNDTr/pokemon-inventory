@@ -105,9 +105,11 @@
                     <div class="pokemon-list">
                         <% if (pokemon && pokemon.length > 0) { %>
                         <% pokemon.forEach(poke => { %>
+                            <a href="/pokemon/<%= poke.id %>" class="text-decoration-none">
                             <div class="pokemon-card">
                                 <img src="<%= poke.image_path %>" alt="<%= poke.name %>">
                             </div>
+                            </a>
                         <% }) %>
                     <% } %>
                     </div>
