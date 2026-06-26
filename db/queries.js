@@ -8,7 +8,8 @@ async function getAllPokemon({ sort = 'asc', types = [] } = {}){
             p.name, 
             p.description,
             p.image_path AS pokemon_image,  
-            ARRAY_AGG(t.image_path) AS types
+            ARRAY_AGG(t.name) AS types,
+            ARRAY_AGG(t.image_path) AS type_images
         FROM pokemon p
         JOIN pokemon_types pt
             ON p.id = pt.pokemon_id
@@ -51,16 +52,41 @@ async function insertPokemon({name, image_path, description}){
 
 
 async function insertPokemonTypes(pokemonId, typeNames){
+    // 1. remove all old relations
+    await pool.query(
+        `DELETE FROM pokemon_types WHERE pokemon_id = $1`,
+        [pokemonId]
+    );
+
+    // 2. if nothing selected, stop here
     if (!Array.isArray(typeNames) || typeNames.length === 0) return;
 
+    // 3. insert new relations
     const sql = `
         INSERT INTO pokemon_types (pokemon_id, type_id)
-        SELECT $1, id FROM types WHERE name = ANY($2)
-        ON CONFLICT DO NOTHING;
+        SELECT $1, id
+        FROM types
+        WHERE name = ANY($2)
     `;
 
     await pool.query(sql, [pokemonId, typeNames]);
 }
+
+
+
+async function editPokemon({pokemon_id, name, description}) {
+    const sql = `
+        UPDATE pokemon
+        SET name = $1, description = $2
+        WHERE id = $3;
+    `
+    await pool.query(sql, [name, description, pokemon_id]);
+}
+
+async function deletePokemon(id){
+    await pool.query(`DELETE FROM pokemon WHERE id = $1`, [id]);
+}
+
 
 // search pokemon
 
@@ -165,5 +191,7 @@ module.exports = {
     getTrainersToPokemon,
     insertTrainer,
     insertTrainerPokemon,
-    getPokemonToTrainer
+    getPokemonToTrainer,
+    editPokemon,
+    deletePokemon
 }

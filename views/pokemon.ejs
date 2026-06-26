@@ -29,7 +29,7 @@
                         <div class="card-body text-center">
                             <h6 class="card-title mb-2"><%= pokemon.name %></h6>
                             <div class="d-flex justify-content-center gap-2 flex-wrap">
-                                <% pokemon.types.forEach(type => { %>
+                                <% pokemon.type_images.forEach(type => { %>
                                     <img src="/images/types/<%= type %>" alt="<%= type %>" style="width: 24px; height: 24px; object-fit: contain;">
                                 <% })%>
                             </div>

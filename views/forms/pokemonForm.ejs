@@ -13,21 +13,29 @@
         <div class="card mx-auto" style="max-width: 720px;">
             <div class="card-body">
                 <h5 class="card-title">Add Pokémon</h5>
-                <form action="/pokemon/new" method="POST" enctype="multipart/form-data">
+                <form action="<%= pokemon ? `/pokemon/edit/${pokemon.id}` : '/pokemon/new' %>" method="POST" enctype="multipart/form-data" >
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
+                            <input type="text" id="name" name="name" value="<%= pokemon ? pokemon.name : '' %>" class="form-control" required>
                         </div>
 
-                        <div class="col-12 col-md-6">
-                            <label for="image" class="form-label">Image</label>
-                            <input type="file" id="image" name="image" class="form-control" required>
-                        </div>
+                        <% if (!pokemon) { %>
+                            <div class="col-12 col-md-6">
+                                <label for="image" class="form-label">Image</label>
+                                <input
+                                    type="file"
+                                    id="image"
+                                    name="image"
+                                    class="form-control"
+                                    required
+                                >
+                            </div>
+                        <% } %>
 
                         <div class="col-12">
                             <label for="description" class="form-label">Description</label>
-                            <textarea id="description" name="description" rows="2" class="form-control"></textarea>
+                            <textarea id="description" name="description" rows="2" class="form-control"><%= pokemon ? pokemon.description : '' %></textarea>
                         </div>
 
                         <div class="col-12">
@@ -35,7 +43,13 @@
                             <div class="types-grid">
                                 <% types.forEach(type => { %>
                                     <label class="form-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" name="types[]" value="<%= type.name %>">
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="types[]"
+                                            value="<%= type.name %>"
+                                            <%= pokemon && pokemon.types && pokemon.types.includes(type.name) ? 'checked' : '' %>
+                                        >
                                         <img src="/images/types/<%= type.image_path %>" alt="<%= type.name %>" style="width:28px; height:28px; object-fit:contain; margin-left:8px; margin-right:8px;">
                                         <span class="form-check-label"><%= type.name %></span>
                                     </label>

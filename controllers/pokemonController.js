@@ -27,10 +27,13 @@ async function getOnePokemon(req, res) {
     }
     const result = await db.getTrainersToPokemon(pokemonId) || { trainers: [] };
 
+
     res.render('onePokemon', {
         pokemon: targetPokemon,
         trainers: Array.isArray(result.trainers) ? result.trainers : [],
     });
+
+    return targetPokemon;
 }
 
 
@@ -38,7 +41,7 @@ async function addPokemonPOST(req, res) {
     const { name, description} = req.body;
     const types = Array.isArray(req.body.types) ? req.body.types : req.body.types ? [req.body.types] : [];
     let imageUrl = null;
-
+    console.log("FILE:", req.file);
     if (req.file) {
         imageUrl = await uploadImage(req.file.path, 'pokemon');
     }
@@ -59,18 +62,45 @@ async function addPokemonPOST(req, res) {
 
 async function newPokemonFormGET(req, res) {
     const types = await db.getAllTypes();
-    res.render('forms/pokemonForm', {types: types})
+    res.render('forms/pokemonForm', {types: types, pokemon: null})
 }
 
-async function editPokemon(pokemonInfo) {
-    
+async function editPokemonGET(req, res) {
+    const pokemonId = req.params.id;
+    const pokemons = await db.getAllPokemon();
+    const types = await db.getAllTypes();
+    const targetPokemon = pokemons.find(pokemon => String(pokemon.id) === pokemonId);
+    res.render('forms/pokemonForm', {pokemon: targetPokemon, types: types});
 }   
 
+async function editPokemonPUT(req, res) {
+    const pokemon_id = req.params.id;
+    const { name, description} = req.body;
+    const types = Array.isArray(req.body.types) ? req.body.types : req.body.types ? [req.body.types] : [];
+
+    await db.editPokemon({pokemon_id, name, description})
+
+    if (types.length > 0) {
+        await db.insertPokemonTypes(pokemon_id, types);
+    }
+
+
+    res.redirect(`/pokemon/${pokemon_id}`)
+}
+
+async function deletePokemon(req, res) {
+    const pokemon_id = req.params.id;
+    // prompt('Admin password:')
+    await db.deletePokemon(pokemon_id);
+    res.redirect('/pokemon');
+}
 
 module.exports = {
     getPokemon,
     addPokemonPOST,
     newPokemonFormGET,
     getOnePokemon,
-    editPokemon
+    editPokemonGET,
+    editPokemonPUT,
+    deletePokemon
 }
