@@ -119,6 +119,12 @@ async function insertTrainer({name, image_path, description}){
 }
 
 async function insertTrainerPokemon(trainerId, pokemonNames) {
+    // 1. remove all old relations
+    await pool.query(
+        `DELETE FROM trainer_pokemon WHERE trainer_id = $1`,
+        [trainerId]
+    );
+
     if (!Array.isArray(pokemonNames) || pokemonNames.length === 0) return;
 
     const sql = `
@@ -180,6 +186,14 @@ async function getPokemonToTrainer(trainer_id) {
     return rows[0] || { pokemon: [] };
 }
 
+async function editTrainer({trainer_id, name, description}) {
+    const sql = `
+        UPDATE trainers
+        SET name = $1, description = $2
+        WHERE id = $3;
+    `
+    await pool.query(sql, [name, description, trainer_id]);
+}
 
 
 module.exports = {
@@ -193,5 +207,6 @@ module.exports = {
     insertTrainerPokemon,
     getPokemonToTrainer,
     editPokemon,
-    deletePokemon
+    deletePokemon,
+    editTrainer
 }

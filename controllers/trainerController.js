@@ -38,7 +38,7 @@ async function addTrainerPOST(req, res) {
 
 async function newTrainerFormGET(req, res) {
     const pokemon = await db.getAllPokemon();
-    res.render('forms/trainerForm', {pokemons: pokemon})
+    res.render('forms/trainerForm', {pokemons: pokemon, trainer: null})
 }
 
 async function getOneTrainer(req, res) {
@@ -56,9 +56,37 @@ async function getOneTrainer(req, res) {
     });
 }
 
+async function editTrainerGET(req, res) {
+    const trainerId = req.params.id;
+    const trainers = await db.getAllTrainers();
+    const pokemon = await db.getAllPokemon();
+    const targetTrainer = trainers.find(trainer => String(trainer.id) === trainerId);
+    // console.log(targetTrainer)
+    const trainerPokemon = await db.getPokemonToTrainer(targetTrainer.id);
+    // console.log(trainerPokemon)
+    res.render('forms/trainerForm', {trainer: targetTrainer, pokemons: pokemon, trainerPokemon: trainerPokemon});
+}   
+
+async function editTrainerPUT(req, res) {
+    const trainer_id = req.params.id;
+    const { name, description} = req.body;
+    const pokemon = Array.isArray(req.body.pokemon) ? req.body.pokemon : req.body.pokemon ? [req.body.pokemon] : [];
+
+    await db.editTrainer({trainer_id, name, description})
+
+    if (pokemon.length > 0) {
+        await db.insertTrainerPokemon(trainer_id, pokemon);
+    }
+
+
+    res.redirect(`/trainers/${trainer_id}`)
+}
+
 module.exports = {
     getTrainers,
     newTrainerFormGET,
     addTrainerPOST,
-    getOneTrainer
+    getOneTrainer,
+    editTrainerGET,
+    editTrainerPUT
 }

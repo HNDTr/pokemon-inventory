@@ -70,6 +70,7 @@ async function editPokemonGET(req, res) {
     const pokemons = await db.getAllPokemon();
     const types = await db.getAllTypes();
     const targetPokemon = pokemons.find(pokemon => String(pokemon.id) === pokemonId);
+    // console.log(targetPokemon)
     res.render('forms/pokemonForm', {pokemon: targetPokemon, types: types});
 }   
 
@@ -90,8 +91,10 @@ async function editPokemonPUT(req, res) {
 
 async function deletePokemon(req, res) {
     const pokemon_id = req.params.id;
-    // prompt('Admin password:')
+    // let user_input = prompt('Admin password:')
+    // if (user_input === process.env.ADMIN_PASS) {
     await db.deletePokemon(pokemon_id);
+    // }
     res.redirect('/pokemon');
 }
 
