@@ -6,7 +6,13 @@ async function getPokemon(req, res) {
     const sortOrder = req.query.sort === 'desc' ? 'desc' : 'asc';
     const selectedTypes = [].concat(req.query.types || []).filter(Boolean);
     const types = await db.getAllTypes();
-    const pokemon = await db.getAllPokemon({ sort: sortOrder, types: selectedTypes });
+    const search = req.query.search || ""
+    let pokemon;
+    if (search) {
+        pokemon = await db.searchPokemon({ search: search })
+    } else {
+        pokemon = await db.getAllPokemon({ sort: sortOrder, types: selectedTypes });
+    }
 
     res.render('pokemon', {
         pokemons: pokemon,

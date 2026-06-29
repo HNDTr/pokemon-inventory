@@ -1,7 +1,7 @@
 const pool = require('./pool');
 
 // get all pokemon
-async function getAllPokemon({ sort = 'asc', types = [] } = {}){
+async function getAllPokemon({ sort = 'asc', types = [], search = ''} = {}){
     let query = `
         SELECT 
             p.id,
@@ -39,6 +39,42 @@ async function getAllPokemon({ sort = 'asc', types = [] } = {}){
     const {rows} = await pool.query(query, params);
     return rows;
 }
+
+
+// get all pokemon
+async function searchPokemon({search = ''} = {}){
+    let query = `
+        SELECT 
+            p.id,
+            p.name, 
+            p.description,
+            p.image_path AS pokemon_image,  
+            ARRAY_AGG(t.name) AS types,
+            ARRAY_AGG(t.image_path) AS type_images
+        FROM pokemon p
+        JOIN pokemon_types pt
+            ON p.id = pt.pokemon_id
+        JOIN types t
+            ON t.id = pt.type_id
+    `;
+    
+    if (search.length > 0) {
+        query += `
+        WHERE 
+            LOWER(p.name) LIKE '%${search}%'
+        `
+    }
+
+    query += `
+        GROUP BY p.id, p.name, p.image_path
+        ORDER BY p.name ASC;
+    `;
+
+    const {rows} = await pool.query(query);
+    return rows;
+}
+
+
 
 async function insertPokemon({name, image_path, description}){
     const sql = `
@@ -208,5 +244,6 @@ module.exports = {
     getPokemonToTrainer,
     editPokemon,
     deletePokemon,
-    editTrainer
+    editTrainer,
+    searchPokemon
 }
