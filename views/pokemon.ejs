@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/types.css"/>
+    <style>
+        .pokemon-list {
+            max-height: 700px; 
+            overflow-y: auto;
+            padding-right: .5rem;
+        }
+    </style>
     <title>Document</title>
 </head>
 <body>
@@ -16,7 +23,7 @@
                 <div class="col-12 col-lg-4 col-xl-3">
                     <%- include('partials/sideBarFilterPokemon', { allTypes: types, selectedTypes: selectedTypes, sortOrder: sortOrder }) %>
                 </div>
-                <div class="col-12 col-lg-8 col-xl-9">
+                <div class="col-12 col-lg-8 col-xl-9 pokemon-list">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3 types-container">
             <% pokemons.forEach(pokemon => { %>
                 <div class="col">
